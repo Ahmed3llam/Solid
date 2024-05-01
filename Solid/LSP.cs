@@ -8,16 +8,22 @@ namespace Solid
 {
     internal class LSP
     {
-        public class Account
+        public abstract class AccountBase
         {
             public decimal Balance { get; protected set; }
 
-            public virtual void Deposit(decimal amount)
+            public abstract void Deposit(decimal amount);
+            public abstract void Withdraw(decimal amount);
+        }
+
+        public class Account : AccountBase
+        {
+            public override void Deposit(decimal amount)
             {
                 Balance += amount;
             }
 
-            public virtual void Withdraw(decimal amount)
+            public override void Withdraw(decimal amount)
             {
                 if (Balance >= amount)
                 {
@@ -30,14 +36,26 @@ namespace Solid
             }
         }
 
-        public class SavingsAccount : Account
+        public class SavingsAccount : AccountBase
         {
             public decimal InterestRate { get; set; }
 
+            public override void Deposit(decimal amount)
+            {
+                Balance += amount;
+            }
+
             public override void Withdraw(decimal amount)
             {
-                //amount += 5.0m;
-                base.Withdraw(amount);
+                decimal totalAmount = amount + InterestRate;
+                if (Balance >= totalAmount)
+                {
+                    Balance -= totalAmount;
+                }
+                else
+                {
+                    throw new InvalidOperationException("Insufficient balance.");
+                }
             }
         }
 

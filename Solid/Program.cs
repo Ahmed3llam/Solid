@@ -28,22 +28,13 @@ namespace Solid
 
             Console.WriteLine("-----------------------------------------------------------------");
 
-            SavingsAccount savingsAccount = new SavingsAccount();
-            savingsAccount.InterestRate = 0.05m;
+            SavingsAccount savingsAccount = new SavingsAccount() { InterestRate=0.05m};
 
             savingsAccount.Deposit(500);
             Console.WriteLine("Savings Account Balance after deposit: " + savingsAccount.Balance);
 
             savingsAccount.Withdraw(200);
             Console.WriteLine("Savings Account Balance after withdrawal: " + savingsAccount.Balance);
-
-            Account account = savingsAccount;
-
-            account.Deposit(300);
-            Console.WriteLine("Account Balance after deposit: " + account.Balance);
-
-            account.Withdraw(150);
-            Console.WriteLine("Account Balance after withdrawal: " + account.Balance);
         }
 
     }
